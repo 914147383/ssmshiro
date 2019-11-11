@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Hello world!
  *
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {org.activiti.spring.boot.SecurityAutoConfiguration.class})
 @MapperScan(value = "com.qf.mapper")
 public class App
 {
