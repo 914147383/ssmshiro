@@ -1,13 +1,17 @@
 package com.qf.controller;
 
+import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
+import com.qf.pojo.Weekly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qf.service.StudentService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -27,7 +31,7 @@ public class StudentController {
         String username = "a";
         User userByUname = studentService.getUserByUname(username);
 
-        System.out.println("userByUname:"+userByUname);
+        //System.out.println("userByUname:"+userByUname);
 
         model.addAttribute("userByUname",userByUname);
         return "updStuPage";
@@ -56,4 +60,53 @@ public class StudentController {
         return "redirect:updStuPage";
     }
 
+    //查询周报
+    @RequestMapping("getWeekly")
+    public String selWeeklyPage(HttpSession session, Model model, @RequestParam(defaultValue = "") String title){
+        // String username = (String) session.getAttribute("username");
+        String username = "a";
+        List<Weekly> weekly = studentService.getWeekly(username, title);
+
+        System.out.println("weekly:"+weekly);
+        model.addAttribute("weekly",weekly);
+
+        return "selWeeklyPage";
+    }
+
+    //删除周报
+    @RequestMapping("delWeekly")
+    public String delWeekly(HttpSession session,int wid){
+        // String username = (String) session.getAttribute("username");
+        String username = "a";
+        int i = studentService.delWeekly(username, wid);
+        return "redirect:getWeekly";
+    }
+
+    //新增周报
+    @RequestMapping("addWeeklyPage")
+    public String addWeeklyPage(){
+        return "addWeeklyPage";
+    }
+
+    //保存新增的周报
+    @RequestMapping("savWeekly")
+    public String savWeekly(Weekly weekly){
+        int i = studentService.addWeekly(weekly);
+
+        return "redirect:getWeekly";
+    }
+
+    //请假申请
+    @RequestMapping("addHoliday")
+    public String addHoliday(){
+        return "addHolidayPage";
+    }
+
+    //保存请假申请
+    @RequestMapping("savHoliday")
+    public String savHoliday(Holiday holiday){
+        int i = studentService.addHoliday(holiday);
+
+        return "login";
+    }
 }
