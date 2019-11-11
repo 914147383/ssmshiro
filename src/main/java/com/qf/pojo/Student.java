@@ -38,6 +38,9 @@ public class Student {
         this.img = img;
     }
 
+    public Student() {
+    }
+
     public Student(int sid, String sname, String sclass, String img) {
         this.sid = sid;
         this.sname = sname;
@@ -45,17 +48,8 @@ public class Student {
         this.img = img;
     }
 
-    public Student(String sname, String sclass, String img) {
-        this.sname = sname;
-        this.sclass = sclass;
-        this.img = img;
-    }
-
-    public Student() {
-    }
-
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Student{" +
                 "sid=" + sid +
                 ", sname='" + sname + '\'' +
