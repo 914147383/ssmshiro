@@ -56,6 +56,23 @@ public class Weekly {
         this.score = score;
     }
 
+    public Weekly(int wid, String username, String title, String time, String report, int score) {
+        this.wid = wid;
+        this.username = username;
+        this.title = title;
+        this.time = time;
+        this.report = report;
+        this.score = score;
+    }
+
+    public Weekly(String username, String title, String time, String report, int score) {
+        this.username = username;
+        this.title = title;
+        this.time = time;
+        this.report = report;
+        this.score = score;
+    }
+
     public Weekly() {
     }
 
