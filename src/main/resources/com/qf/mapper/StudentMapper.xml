@@ -23,7 +23,7 @@
 
     <select id="getWeekly" resultType="weekly">
         select * from weekly where username=#{uname}
-        <if test="title != null">
+        <if test="title != ''">
             and title=#{title}
         </if>
 
