@@ -1,13 +1,10 @@
 package com.qf.service;
 
-<<<<<<< Updated upstream
-public interface StudentService {
-=======
 import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
 import com.qf.pojo.Weekly;
-
 public interface StudentService {
+
     //查询个人基本信息   修改，修改密码
     public User getUserByUname(String uname);
 
@@ -25,5 +22,5 @@ public interface StudentService {
 
     //申请请假
     public int addHoliday(Holiday holiday);
->>>>>>> Stashed changes
+
 }
