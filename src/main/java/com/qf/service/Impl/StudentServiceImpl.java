@@ -8,6 +8,8 @@ import com.qf.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -33,6 +35,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int addWeekly(Weekly weekly) {
         return studentMapper.addWeekly(weekly);
+    }
+
+    @Override
+    public List<Weekly> getWeekly(String uname, String title) {
+        return studentMapper.getWeekly(uname, title);
+    }
+
+    @Override
+    public int delWeekly(String username, int wid) {
+        return studentMapper.delWeekly(username, wid);
     }
 
     @Override
