@@ -30,7 +30,7 @@
     </select>
 
     <delete id="delWeekly" parameterType="weekly">
-        delete * from weekly where username=#{username} and wid=#{wid}
+        delete from weekly where username=#{username} and wid=#{wid}
     </delete>
 
     <insert id="addHoliday" parameterType="holiday">
