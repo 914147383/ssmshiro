@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_shifree?characterEncoding=utf8
+    username: root
+    password: 123456
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+mybatis:
+  type-aliases-package: com.qf.pojo
+  configuration:
+    aggressive-lazy-loading: false
+    lazy-loading-enabled: true
+pagehelper:
+  helper-dialect: mysql
