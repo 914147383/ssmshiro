@@ -3,6 +3,9 @@ package com.qf.service;
 import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
 import com.qf.pojo.Weekly;
+
+import java.util.List;
+
 public interface StudentService {
 
     //查询个人基本信息   修改，修改密码
@@ -19,6 +22,12 @@ public interface StudentService {
 
     //新增周报
     public int addWeekly(Weekly weekly);
+
+    //查询周报,可根据   标题  模糊查询
+    public List<Weekly> getWeekly(String uname, String title);
+
+    //删除周报，可删除未打分的周报
+    public int delWeekly(String username,int wid);
 
     //申请请假
     public int addHoliday(Holiday holiday);
