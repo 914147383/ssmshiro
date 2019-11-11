@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mapper.StudentMapper">
+    <select id="getUserByUname" parameterType="String" resultType="user">
+        select * from user where username=#{username}
+    </select>
+
+    <update id="updUserByUname" parameterType="user">
+        update user set password=#{password},img=#{img}
+        where username=#{username}
+    </update>
+    <update id="updStuByUname" parameterType="user">
+        update student set img=#{img}
+        where sname=#{username}
+    </update>
+
+    <insert id="addWeekly" parameterType="weekly">
+        insert into weekly(username,title,time,report)
+        values (#{username},#{title},#{time},#{report})
+    </insert>
+
+    <select id="getWeekly" resultType="weekly">
+        select * from weekly where username=#{uname}
+        <if test="title != null">
+            and title=#{title}
+        </if>
+
+    </select>
+
+    <delete id="delWeekly" parameterType="weekly">
+        delete * from weekly where username=#{username} and wid=#{wid}
+    </delete>
+
+    <insert id="addHoliday" parameterType="holiday">
+        insert into holiday(hname,startdate,enddate,reason,state)
+        values (#{hname},#{startdate},#{enddate},#{reason},0)
+    </insert>
+</mapper>

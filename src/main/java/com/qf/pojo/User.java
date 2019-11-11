@@ -62,6 +62,17 @@ public class User {
         this.img = img;
     }
 
+    public User(String username, String password, String img) {
+        this.username = username;
+        this.password = password;
+        this.img = img;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User() {
     }
 

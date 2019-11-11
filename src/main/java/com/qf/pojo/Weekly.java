@@ -73,6 +73,13 @@ public class Weekly {
         this.score = score;
     }
 
+    public Weekly(String username, String title, String time, String report) {
+        this.username = username;
+        this.title = title;
+        this.time = time;
+        this.report = report;
+    }
+
     public Weekly() {
     }
 
