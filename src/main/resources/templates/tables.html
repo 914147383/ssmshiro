@@ -46,8 +46,22 @@
           });
 
         $("body").on("click","#addHoliday",function(){
-          $(".dv_content").attr("src","addHoliday");
+          $(".dv_content").attr("src","addHoliday");/*请假申请*/
         });
+
+        $("body").on("click","#addHoliday",function(){
+          $(".dv_content").attr("src","addHoliday");/*员工请假审批*/
+        });
+
+
+        $("body").on("click","#selStuHolidayPage",function(){
+          $(".dv_content").attr("src","selStuHolidayPage");/*学生请假审批*/
+        });
+
+        $("body").on("click","#addHoliday",function(){
+          $(".dv_content").attr("src","addHoliday");/*成绩查看*/
+        });
+
       })
 
     </script>
@@ -96,7 +110,7 @@
 
                 <!--<li><a href="#" id="updUserPage">个人资料管理</a></li>-->
                 <li><a href="#" id="updVacate">员工请假审批</a></li>
-                <li><a href="#" id="updHoliday">学生请假审批</a></li>
+                <li><a href="#" id="selStuHolidayPage">学生请假审批</a></li>
                 <li><a href="#" id="getScore">成绩查看</a></li>
              <!-- </ul>
             </li>-->
