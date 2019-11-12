@@ -37,7 +37,7 @@
         delete from weekly where username=#{username} and wid=#{wid}
     </delete>
 
-    <insert id="addHoliday" parameterType="holiday">
+    <insert id="addHoliday" parameterType="holiday" useGeneratedKeys="true" keyProperty="hid">
         insert into holiday(hname,startdate,enddate,reason,state)
         values (#{hname},#{startdate},#{enddate},#{reason},0)
     </insert>

@@ -50,7 +50,7 @@ public class StudentController {
         String username = "a";
         User userByUname = studentService.getUserByUname(username);
 
-        System.out.println("user:"+user);
+        //System.out.println("user:"+user);
 
         /*if(user.getImg().equals("") || user.getImg()==null){
             user.setImg(userByUname.getImg());

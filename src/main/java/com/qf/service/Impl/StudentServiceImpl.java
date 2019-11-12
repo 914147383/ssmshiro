@@ -7,17 +7,25 @@ import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
 import com.qf.pojo.Weekly;
 import com.qf.service.StudentService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentMapper studentMapper;
-
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    private TaskService taskService;
     @Override
     public User getUserByUname(String uname) {
         return studentMapper.getUserByUname(uname);
@@ -52,8 +60,26 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.delWeekly(username, wid);
     }
 
+    /**
+     * 学生申请请假
+     * @param holiday
+     * @return
+     */
     @Override
     public int addHoliday(Holiday holiday) {
-        return studentMapper.addHoliday(holiday);
+        studentMapper.addHoliday(holiday);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("stuName",holiday.getHname());
+        map.put("teaName","t");
+        map.put("claName","c");
+        map.put("bossName","b");
+        map.put("days",3);
+
+        //发起流程实例
+        runtimeService.startProcessInstanceByKey("stuQingJia",holiday.getHid()+"",map);
+        //完成任务
+        Task task = taskService.createTaskQuery().taskAssignee(holiday.getHname()).singleResult();
+        taskService.complete(task.getId());
+        return holiday.getHid();
     }
 }

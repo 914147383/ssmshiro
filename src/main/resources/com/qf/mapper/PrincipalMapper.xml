@@ -16,4 +16,18 @@
     <update id="updCheckedByHid">
         update holiday set state=1 where hid=#{arg0}
     </update>
+
+    <select id="getVacate" resultType="vacate">
+        select * from vacate where vid in
+        <foreach collection="list" item="i" separator="," open="(" close=")">
+            #{i}
+        </foreach>
+    </select>
+
+    <select id="getHolidy" resultType="holiday">
+        select * from holiday where hid in
+        <foreach collection="list" item="i" separator="," open="(" close=")">
+            #{i}
+        </foreach>
+    </select>
 </mapper>
