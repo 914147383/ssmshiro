@@ -1,5 +1,7 @@
 package com.qf.service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qf.mapper.StudentMapper;
 import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
@@ -38,8 +40,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Weekly> getWeekly(String uname, String title) {
-        return studentMapper.getWeekly(uname, title);
+    public PageInfo<Weekly> getWeekly(String uname, String title,int pageNum,int pageSize ) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Weekly> weekly = studentMapper.getWeekly(uname, title);
+        PageInfo<Weekly> pageInfo = new PageInfo<Weekly>(weekly);
+        return pageInfo;
     }
 
     @Override

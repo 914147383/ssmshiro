@@ -1,5 +1,6 @@
 package com.qf.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
 import com.qf.pojo.Weekly;
@@ -49,9 +50,11 @@ public class StudentController {
         String username = "a";
         User userByUname = studentService.getUserByUname(username);
 
-        if(user.getImg().equals("") || user.getImg()==null){
+        System.out.println("user:"+user);
+
+        /*if(user.getImg().equals("") || user.getImg()==null){
             user.setImg(userByUname.getImg());
-        }
+        }*/
         int i = studentService.updUserAndStuByUname(user);
 
         if(i>0){
@@ -62,12 +65,15 @@ public class StudentController {
 
     //查询周报
     @RequestMapping("getWeekly")
-    public String selWeeklyPage(HttpSession session, Model model, @RequestParam(defaultValue = "") String title){
+    public String selWeeklyPage(HttpSession session, Model model,
+                                @RequestParam(defaultValue = "") String title,
+                                @RequestParam(defaultValue = "1") int pageNo,
+                                @RequestParam(defaultValue = "6") int pageSize){
         // String username = (String) session.getAttribute("username");
         String username = "a";
-        List<Weekly> weekly = studentService.getWeekly(username, title);
+        PageInfo<Weekly> weekly = studentService.getWeekly(username, title, pageNo, pageSize);
 
-        System.out.println("weekly:"+weekly);
+        //System.out.println("weekly:"+weekly);
         model.addAttribute("weekly",weekly);
 
         return "selWeeklyPage";

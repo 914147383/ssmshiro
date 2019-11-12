@@ -1,5 +1,6 @@
 package com.qf.service;
 
+import com.github.pagehelper.PageInfo;
 import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
 import com.qf.pojo.Weekly;
@@ -24,7 +25,7 @@ public interface StudentService {
     public int addWeekly(Weekly weekly);
 
     //查询周报,可根据   标题  模糊查询
-    public List<Weekly> getWeekly(String uname, String title);
+    public PageInfo<Weekly> getWeekly(String uname, String title,int pageNum,int pageSize);
 
     //删除周报，可删除未打分的周报
     public int delWeekly(String username,int wid);

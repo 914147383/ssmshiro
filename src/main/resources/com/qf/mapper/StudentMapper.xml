@@ -8,7 +8,11 @@
     </select>
 
     <update id="updUserByUname" parameterType="user">
-        update user set password=#{password},img=#{img}
+        update user set password=#{password}
+        <if test="img != '' and img != null">
+            ,img=#{img}
+        </if>
+
         where username=#{username}
     </update>
     <update id="updStuByUname" parameterType="user">

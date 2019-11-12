@@ -37,6 +37,17 @@
           $(".dv_content").attr("src","updStuPage");
         });
 
+          $("body").on("click","#addWeeklyPage",function(){
+              $(".dv_content").attr("src","addWeeklyPage");
+          });
+
+          $("body").on("click","#getWeekly",function(){
+              $(".dv_content").attr("src","getWeekly");
+          });
+
+        $("body").on("click","#addHoliday",function(){
+          $(".dv_content").attr("src","addHoliday");
+        });
       })
 
     </script>
@@ -63,19 +74,39 @@
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
           <h5 class="sidenav-heading">Main</h5>
-          <ul id="side-main-menu" class="side-menu list-unstyled">                  
-            <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
+          <ul id="side-main-menu" class="side-menu list-unstyled">
+            <!--学生-->
+            <!--<li><a href="#exampledropdownDropdown" aria-expanded="false"  data-toggle="collapse">
                 <i class="icon-interface-windows"></i>学生 </a>
-              <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+
+              <ul id="exampledropdownDropdown" class="collapse list-unstyled ">-->
+
                 <li><a href="#" id="updStuPage">个人资料管理</a></li>
-                <li><a href="#">周报管理</a></li>
-                <li><a href="#">Page</a></li>
-              </ul>
+                <li><a href="#" id="addWeeklyPage">新增周报</a></li>
+                <li><a href="#" id="getWeekly">查询周报</a></li>
+                <li><a href="#" id="addHoliday">请假申请</a></li>
+             <!-- </ul>
+            </li>-->
+
+            <!--校长-->
+           <!-- <li><a href="#exampledropdownDropdown" aria-expanded="false"  data-toggle="collapse">
+              <i class="icon-interface-windows"></i>校长 </a>
+
+              <ul id="boss" class="collapse list-unstyled ">-->
+
+                <!--<li><a href="#" id="updUserPage">个人资料管理</a></li>-->
+                <li><a href="#" id="updVacate">员工请假审批</a></li>
+                <li><a href="#" id="updHoliday">学生请假审批</a></li>
+                <li><a href="#" id="getScore">成绩查看</a></li>
+             <!-- </ul>
+            </li>-->
+
+            <li><a href="loginP"> <i class="icon-interface-windows"></i>
+                Login page
+                </a>
             </li>
-            <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page                             </a></li>
-            <li> <a href="#"> <i class="icon-mail"></i>Demo
-                <div class="badge badge-warning">6 New</div></a></li>
           </ul>
+
         </div>
       </div>
     </nav>
