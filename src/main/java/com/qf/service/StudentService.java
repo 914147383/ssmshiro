@@ -25,7 +25,7 @@ public interface StudentService {
     public int addWeekly(Weekly weekly);
 
     //查询周报,可根据   标题  模糊查询
-    public PageInfo<Weekly> getWeekly(String uname, String title,int pageNum,int pageSize);
+    public PageInfo<Weekly> getWeekly(String uname,String time,String score, String title,int pageNum,int pageSize);
 
     //删除周报，可删除未打分的周报
     public int delWeekly(String username,int wid);

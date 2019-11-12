@@ -41,20 +41,48 @@ public class PrincipalServiceImpl implements PrincipalService {
         return principalMapper.updUserByUname(user);
     }
 
+    /**
+     * 查询员工请假待审批--------校长
+     * @param username
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Vacate> getVacate(String username,int pageNum,int pageSize) {
+        //待办任务集合
+        List<Task> list = taskService.createTaskQuery().processDefinitionKeyLike("teaQingJia").taskAssignee(username).list();
+        List<String> bussinessKeys = new ArrayList<String>();
+        //循环遍历获取bussiness keys,即请假条的id
+        for (Task task : list){
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+                    .processInstanceId(task.getProcessInstanceId()).singleResult();
+            bussinessKeys.add(processInstance.getBusinessKey());
+
+            System.out.println("bussinessKeys:"+processInstance.getBusinessKey());
+        }
+
+        if(bussinessKeys.size()>0){
+            PageHelper.startPage(pageNum,pageSize);
+            List<Vacate> vacate = principalMapper.getVacate(bussinessKeys);
+            PageInfo<Vacate> pageInfo = new PageInfo<Vacate>(vacate);
+
+            System.out.println("vacate1:"+principalMapper.getVacate(bussinessKeys));
+
+            return pageInfo;
+        }
         return null;
     }
 
     /**
-     * 查询学生带审批假条--------校长
+     * 查询学生带审批假条--------老师，班主任，校长
      * @param username
      * @return
      */
     @Override
-    public PageInfo<Holiday> getHolidy(String username,int pageNum,int pageSize) {
+    public PageInfo<Holiday> getHolidy(String username,int pageNum,int pageSize,String processDef) {
         //待办任务集合
-        List<Task> list = taskService.createTaskQuery().taskAssignee(username).list();
+        List<Task> list = taskService.createTaskQuery().processDefinitionKeyLike(processDef).taskAssignee(username).list();
         List<String> bussinessKeys = new ArrayList<String>();
         //循环遍历获取bussiness keys,即请假条的id
         for (Task task : list){
@@ -63,7 +91,7 @@ public class PrincipalServiceImpl implements PrincipalService {
             bussinessKeys.add(processInstance.getBusinessKey());
         }
 
-        System.out.println("bussinessKeys:"+bussinessKeys.size());
+       // System.out.println("bussinessKeys:"+bussinessKeys.size());
 
         if(bussinessKeys.size()>0){
             PageHelper.startPage(pageNum,pageSize);
@@ -75,7 +103,11 @@ public class PrincipalServiceImpl implements PrincipalService {
     }
 
     @Override
-    public int updCheckedByVid(int vid) {
+    public int updCheckedByVid(String username,int vid) {
+        //完成任务
+        Task task = taskService.createTaskQuery().processInstanceBusinessKey(vid + "").taskAssignee(username).singleResult();
+        taskService.complete(task.getId());
+        //审核通过
         return principalMapper.updCheckedByVid(vid);
     }
 

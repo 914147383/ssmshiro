@@ -28,9 +28,14 @@
     <select id="getWeekly" resultType="weekly">
         select * from weekly where username=#{uname}
         <if test="title != ''">
-            and title=#{title}
+            and title like '%${title}%'
         </if>
-
+        <if test="time != ''">
+            and time like '%${time}%'
+        </if>
+        <if test="score != ''">
+            and score like '%${score}%'
+        </if>
     </select>
 
     <delete id="delWeekly" parameterType="weekly">

@@ -22,7 +22,7 @@ public interface StudentMapper {
     public int addWeekly(Weekly weekly);
 
     //查询周报,可根据   标题  模糊查询
-    public List<Weekly> getWeekly(String uname,String title);
+    public List<Weekly> getWeekly(String uname,String title,String time,String score);
 
     //删除周报，可删除未打分的周报
     public int delWeekly(String username,int wid);

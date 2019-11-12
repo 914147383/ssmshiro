@@ -51,9 +51,17 @@
         <div class="card-header d-flex align-items-center">
             <h4>周报查询</h4>
         </div>
+        <div class="card-header d-flex align-items-center">
+            <form action="">
+                标题:<input name="title" type="text"/>
+                时间:<input name="time" type="date"/>
+                分数:<input name="score" type="text"/>
+                <input type="submit" value="搜搜"/>
+            </form>
+        </div>
         <div class="card-body" th:height="800px">
             <table>
-                <tr>
+                <tr style="height: 50px">
                     <th>序号</th>
                     <th>姓名</th>
                     <th>标题</th>

@@ -21,15 +21,16 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping("tablePage")
-    public String tablePage(){
+    public String tablePage(HttpSession session){
+        session.setAttribute("username","a");
         return "tables";
     }
 
     //个人资料管理   界面
     @RequestMapping("updStuPage")
     public String updStuPage(HttpSession session, Model model){
-       // String username = (String) session.getAttribute("username");
-        String username = "a";
+        String username = (String) session.getAttribute("username");
+
         User userByUname = studentService.getUserByUname(username);
 
         //System.out.println("userByUname:"+userByUname);
@@ -46,8 +47,8 @@ public class StudentController {
     //个人资料管理   保存
     @RequestMapping("savStuPage")
     public String savStuPage(HttpSession session,User user){
-        // String username = (String) session.getAttribute("username");
-        String username = "a";
+         String username = (String) session.getAttribute("username");
+
         User userByUname = studentService.getUserByUname(username);
 
         //System.out.println("user:"+user);
@@ -67,11 +68,13 @@ public class StudentController {
     @RequestMapping("getWeekly")
     public String selWeeklyPage(HttpSession session, Model model,
                                 @RequestParam(defaultValue = "") String title,
+                                @RequestParam(defaultValue = "") String time,
+                                @RequestParam(defaultValue = "") String score,
                                 @RequestParam(defaultValue = "1") int pageNo,
                                 @RequestParam(defaultValue = "6") int pageSize){
-        // String username = (String) session.getAttribute("username");
-        String username = "a";
-        PageInfo<Weekly> weekly = studentService.getWeekly(username, title, pageNo, pageSize);
+         String username = (String) session.getAttribute("username");
+
+        PageInfo<Weekly> weekly = studentService.getWeekly(username,time,score, title, pageNo, pageSize);
 
         //System.out.println("weekly:"+weekly);
         model.addAttribute("weekly",weekly);
@@ -79,11 +82,17 @@ public class StudentController {
         return "selWeeklyPage";
     }
 
+    //模糊搜搜周报
+    @RequestMapping("selWeekByLike")
+    public String selWeekByLike(){
+return "";
+    }
+
     //删除周报
     @RequestMapping("delWeekly")
     public String delWeekly(HttpSession session,int wid){
-        // String username = (String) session.getAttribute("username");
-        String username = "a";
+         String username = (String) session.getAttribute("username");
+
         int i = studentService.delWeekly(username, wid);
         return "redirect:getWeekly";
     }
