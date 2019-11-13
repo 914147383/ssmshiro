@@ -29,8 +29,11 @@ public interface StudentService {
     //删除周报，可删除未打分的周报
     public int delWeekly(String username,int wid);
 
-    //申请请假
+    //学生申请请假
     public int addHoliday(Holiday holiday);
+
+    //老师申请请假
+    public int addVacate(Vacate vacate);
 
     //根据班级名称，查询讲师，班主任
     public Class getClassBy(String gname);

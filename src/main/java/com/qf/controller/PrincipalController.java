@@ -85,7 +85,7 @@ public class PrincipalController {
 
         PageInfo<Holiday> holidy = principalService.getHolidy(username,pageNo,pageSize,"stuQingJia1");
 
-        //System.out.println("holidy:"+holidy);
+        System.out.println("holidy:"+holidy);
 
         model.addAttribute("holidy",holidy);
 

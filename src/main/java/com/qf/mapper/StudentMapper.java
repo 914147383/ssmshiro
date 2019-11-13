@@ -1,10 +1,7 @@
 package com.qf.mapper;
 
+import com.qf.pojo.*;
 import com.qf.pojo.Class;
-import com.qf.pojo.Holiday;
-import com.qf.pojo.Student;
-import com.qf.pojo.User;
-import com.qf.pojo.Weekly;
 
 import java.util.List;
 
@@ -36,4 +33,7 @@ public interface StudentMapper {
 
     //根据学生姓名，查查student表
     public Student getStu(String sname);
+
+    //老师申请请假
+    public int addVacate(Vacate vacate);
 }

@@ -46,13 +46,12 @@
           });
 
         $("body").on("click","#addHoliday",function(){
-          $(".dv_content").attr("src","addHoliday");/*请假申请*/
+          $(".dv_content").attr("src","addHoliday");/*学生请假申请*/
         });
 
-        $("body").on("click","#addHoliday",function(){
-          $(".dv_content").attr("src","addHoliday");/*员工请假审批*/
+        $("body").on("click","#selVacatePage",function(){
+          $(".dv_content").attr("src","selVacatePage");/*员工请假审批*/
         });
-
 
         $("body").on("click","#selStuHolidayPage",function(){
           $(".dv_content").attr("src","selStuHolidayPage");/*学生请假审批*/
@@ -60,6 +59,10 @@
 
         $("body").on("click","#addHoliday",function(){
           $(".dv_content").attr("src","addHoliday");/*成绩查看*/
+        });
+
+        $("body").on("click","#addVacate",function(){
+          $(".dv_content").attr("src","addVacate");/*老师请假申请*/
         });
 
       })
@@ -79,7 +82,7 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
-          <div class="sidenav-header-inner text-center"><img src="img/avatar-7.jpg" alt="person" class="img-fluid rounded-circle">
+          <div class="sidenav-header-inner text-center"><img alt="person" class="img-fluid rounded-circle" th:src="'img/'+${#session.getAttribute('userByUname').getImg()}">
             <h2 class="h5">Nathan Andrews</h2><span>Web Developer</span>
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
@@ -89,31 +92,19 @@
         <div class="main-menu">
           <h5 class="sidenav-heading">Main</h5>
           <ul id="side-main-menu" class="side-menu list-unstyled">
-            <!--学生-->
-            <!--<li><a href="#exampledropdownDropdown" aria-expanded="false"  data-toggle="collapse">
-                <i class="icon-interface-windows"></i>学生 </a>
-
-              <ul id="exampledropdownDropdown" class="collapse list-unstyled ">-->
 
                 <li><a href="#" id="updStuPage">个人资料管理</a></li>
                 <li><a href="#" id="addWeeklyPage">新增周报</a></li>
+
                 <li><a href="#" id="getWeekly">查询周报</a></li>
-                <li><a href="#" id="addHoliday">请假申请</a></li>
-             <!-- </ul>
-            </li>-->
+                <li><a href="#" id="addHoliday">学生请假申请</a></li>
 
-            <!--校长-->
-           <!-- <li><a href="#exampledropdownDropdown" aria-expanded="false"  data-toggle="collapse">
-              <i class="icon-interface-windows"></i>校长 </a>
+                <li><a href="#" id="addVacate">老师请假申请</a></li>
 
-              <ul id="boss" class="collapse list-unstyled ">-->
 
-                <!--<li><a href="#" id="updUserPage">个人资料管理</a></li>-->
-                <li><a href="#" id="updVacate">员工请假审批</a></li>
+                <li><a href="#" id="selVacatePage">员工请假审批</a></li>
                 <li><a href="#" id="selStuHolidayPage">学生请假审批</a></li>
                 <li><a href="#" id="getScore">成绩查看</a></li>
-             <!-- </ul>
-            </li>-->
 
             <li><a href="loginP"> <i class="icon-interface-windows"></i>
                 Login page

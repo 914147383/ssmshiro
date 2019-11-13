@@ -75,14 +75,14 @@ public class PrincipalServiceImpl implements PrincipalService {
     }
 
     /**
-     * 查询学生带审批假条--------老师，班主任，校长
+     * 查询学生带审批假条--------老师，班主任，校长  stuQingJia1
      * @param username
      * @return
      */
     @Override
     public PageInfo<Holiday> getHolidy(String username,int pageNum,int pageSize,String processDef) {
         //待办任务集合
-        List<Task> list = taskService.createTaskQuery().processDefinitionKeyLike(processDef).taskAssignee(username).list();
+        List<Task> list = taskService.createTaskQuery().processDefinitionKeyLike("stuQingJia1").taskAssignee(username).list();
         List<String> bussinessKeys = new ArrayList<String>();
         //循环遍历获取bussiness keys,即请假条的id
         for (Task task : list){
@@ -91,7 +91,7 @@ public class PrincipalServiceImpl implements PrincipalService {
             bussinessKeys.add(processInstance.getBusinessKey());
         }
 
-       // System.out.println("bussinessKeys:"+bussinessKeys.size());
+        System.out.println("bussinessKeys:"+bussinessKeys.size());
 
         if(bussinessKeys.size()>0){
             PageHelper.startPage(pageNum,pageSize);

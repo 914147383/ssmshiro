@@ -9,7 +9,7 @@
         where username=#{username}
     </update>
 
-    <update id="updCheckedByVid">
+    <update id="updCheckedByVid" parameterType="int">
         update vacate set state = 1 where vid=#{arg0}
     </update>
 

@@ -48,6 +48,13 @@
         values (#{hname},#{startdate},#{enddate},#{reason},0)
     </insert>
 
+
+    <insert id="addVacate" parameterType="vacate" useGeneratedKeys="true" keyProperty="vid">
+        insert into vacate(vname,startdate,enddate,reason,state)
+        values (#{vname},#{startdate},#{enddate},#{reason},0)
+    </insert>
+
+
     <select id="getClassBy" resultType="class">
         select * from class where gname = #{gname}
     </select>

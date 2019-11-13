@@ -3,16 +3,32 @@ package com.qf.controller;
 import com.github.pagehelper.PageInfo;
 import com.qf.pojo.Holiday;
 import com.qf.pojo.User;
+import com.qf.pojo.Vacate;
 import com.qf.pojo.Weekly;
+
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qf.service.StudentService;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class StudentController {
@@ -22,7 +38,14 @@ public class StudentController {
 
     @RequestMapping("tablePage")
     public String tablePage(HttpSession session){
-        session.setAttribute("username","a");
+        session.setAttribute("username","b");
+
+        String username = (String) session.getAttribute("username");
+
+        User userByUname = studentService.getUserByUname(username);
+
+        session.setAttribute("userByUname",userByUname);
+
         return "tables";
     }
 
@@ -33,7 +56,7 @@ public class StudentController {
 
         User userByUname = studentService.getUserByUname(username);
 
-        //System.out.println("userByUname:"+userByUname);
+        System.out.println("userByUname:"+userByUname);
 
         model.addAttribute("userByUname",userByUname);
         return "updStuPage";
@@ -45,22 +68,36 @@ public class StudentController {
     }
 
     //个人资料管理   保存
-    @RequestMapping("savStuPage")
-    public String savStuPage(HttpSession session,User user){
-         String username = (String) session.getAttribute("username");
+    @PostMapping("savStuPage")
+    public String savStuPage(String username,String password,HttpSession session,
+                             HttpServletRequest request,
+                             MultipartFile file){
+        User user = new User();
+        user.setUsername(username);
 
-        User userByUname = studentService.getUserByUname(username);
+        String md5Hash = new Md5Hash(password).toString();
 
-        //System.out.println("user:"+user);
+        user.setPassword(md5Hash);
 
-        /*if(user.getImg().equals("") || user.getImg()==null){
-            user.setImg(userByUname.getImg());
-        }*/
-        int i = studentService.updUserAndStuByUname(user);
+        String filename=file.getOriginalFilename();
+        user.setImg(filename);
 
-        if(i>0){
-            return "updStuSuccessful";
+        String path=System.getProperty("user.dir")+"\\src\\main\\resources\\static\\img\\"+filename;
+
+       // System.out.println("path:"+path);
+
+        File file1=new File(path);
+        if(!filename.equals("")){
+            try {
+                file.transferTo(file1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        int i = studentService.updUserAndStuByUname(user);
+       // System.out.println("i:"+i);
+
         return "redirect:updStuPage";
     }
 
@@ -111,17 +148,43 @@ return "";
         return "redirect:getWeekly";
     }
 
-    //请假申请
+    //学生请假申请
     @RequestMapping("addHoliday")
     public String addHoliday(){
         return "addHolidayPage";
     }
 
-    //保存请假申请
+    //学生保存请假申请
     @RequestMapping("savHoliday")
     public String savHoliday(Holiday holiday){
         int i = studentService.addHoliday(holiday);
 
         return "login";
+    }
+
+    //老师请假申请
+    @RequestMapping("addVacate")
+    public String addVacate(){
+        return "addVacate";
+    }
+
+    //老师保存请假申请
+    @RequestMapping("savVacate")
+    public String savVacate(Vacate vacate){
+        int i = studentService.addVacate(vacate);
+
+        return "login";
+    }
+
+    //学生信息批量导入界面
+    @RequestMapping("addStu")
+    public String addStu(){
+        return "addStu";
+    }
+
+    //学生信息批量导入保存
+    @RequestMapping("savStu")
+    public String savStu(){
+        return "redirect:addStu";
     }
 }

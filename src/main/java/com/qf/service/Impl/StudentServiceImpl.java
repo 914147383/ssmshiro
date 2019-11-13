@@ -13,6 +13,9 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,24 +83,44 @@ public class StudentServiceImpl implements StudentService {
 
         Student stu = studentMapper.getStu(holiday.getHname());
         Class classBy = studentMapper.getClassBy(stu.getSclass());
+        int days = getDays(holiday.getStartdate(), holiday.getEnddate());
 
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("stuName",holiday.getHname());
         map.put("teaName",classBy.getLecturer());
         map.put("claName",classBy.getClass_teacher());
         map.put("BossName","b");
-        map.put("days",3);
-
-        /*map.put("teaName","t");
-        map.put("bossName","b");*/
+        map.put("days",days);
 
 
         //发起流程实例teaQingJia  stuQingJia1
-        runtimeService.startProcessInstanceByKey("stuQingJia",holiday.getHid()+"",map);
+        runtimeService.startProcessInstanceByKey("stuQingJia1",holiday.getHid()+"",map);
         //完成任务
         Task task = taskService.createTaskQuery().taskAssignee(holiday.getHname()).singleResult();
         taskService.complete(task.getId());
         return holiday.getHid();
+    }
+    /**
+     * 老师申请请假
+     * @param vacate
+     * @return
+     */
+    @Override
+    public int addVacate(Vacate vacate) {
+
+        studentMapper.addVacate(vacate);
+
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        map.put("teaName",vacate.getVname());
+        map.put("bossName","b");
+
+        //发起流程实例teaQingJia  stuQingJia1
+        runtimeService.startProcessInstanceByKey("teaQingJia",vacate.getVid()+"",map);
+        //完成任务
+        Task task = taskService.createTaskQuery().processDefinitionKeyLike("teaQingJia").taskAssignee(vacate.getVname()).singleResult();
+        taskService.complete(task.getId());
+        return vacate.getVid();
     }
 
     @Override
@@ -108,6 +131,24 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStu(String sname) {
         return studentMapper.getStu(sname);
+    }
+
+    /**
+     * 获取请假天数
+     */
+    private int getDays(String startDate,String endDate){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        Date start = null;
+        Date end = null;
+        try {
+            start = simpleDateFormat.parse(startDate);
+            end = simpleDateFormat.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long daysTime = end.getTime() - start.getTime();
+        int days = (int) (daysTime/(24*60*60*1000));
+        return days;
     }
 
 

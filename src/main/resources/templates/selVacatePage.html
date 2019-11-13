@@ -67,8 +67,8 @@
                         <td th:text="${w.getVname()}"></td>
                         <td th:text="${w.getStartdate()}"></td>
                         <td th:text="${w.getEnddate()}"></td>
-                        <td th:text="${w.getReson()}"></td>
-                        <td><a th:href="@{passVacate(hid=${w.getVid()})}">审核通过</a></td>
+                        <td th:text="${w.getReason()}"></td>
+                        <td><a th:href="@{passVacate(vid=${w.getVid()})}">审核通过</a></td>
                     </tr>
 
                 </table>
