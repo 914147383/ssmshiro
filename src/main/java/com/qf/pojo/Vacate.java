@@ -5,7 +5,7 @@ public class Vacate {
     private String vname;
     private String startdate;
     private String enddate;
-    private String reson;
+    private String reason;
     private int state;
 
     public int getVid() {
@@ -40,12 +40,21 @@ public class Vacate {
         this.enddate = enddate;
     }
 
-    public String getReson() {
-        return reson;
+    public Vacate(int vid, String vname, String startdate, String enddate, String reson, int state) {
+        this.vid = vid;
+        this.vname = vname;
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.reason = reson;
+        this.state = state;
     }
 
-    public void setReson(String reson) {
-        this.reson = reson;
+    public Vacate(String vname, String startdate, String enddate, String reason, int state) {
+        this.vname = vname;
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.reason = reason;
+        this.state = state;
     }
 
     public int getState() {
@@ -56,21 +65,12 @@ public class Vacate {
         this.state = state;
     }
 
-    public Vacate(int vid, String vname, String startdate, String enddate, String reson, int state) {
-        this.vid = vid;
-        this.vname = vname;
-        this.startdate = startdate;
-        this.enddate = enddate;
-        this.reson = reson;
-        this.state = state;
+    public String getReason() {
+        return reason;
     }
 
-    public Vacate(String vname, String startdate, String enddate, String reson, int state) {
-        this.vname = vname;
-        this.startdate = startdate;
-        this.enddate = enddate;
-        this.reson = reson;
-        this.state = state;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public Vacate() {
@@ -83,7 +83,7 @@ public class Vacate {
                 ", vname='" + vname + '\'' +
                 ", startdate='" + startdate + '\'' +
                 ", enddate='" + enddate + '\'' +
-                ", reson='" + reson + '\'' +
+                ", reason='" + reason + '\'' +
                 ", state=" + state +
                 '}';
     }
