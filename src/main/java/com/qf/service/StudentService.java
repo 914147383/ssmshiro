@@ -1,9 +1,8 @@
 package com.qf.service;
 
 import com.github.pagehelper.PageInfo;
-import com.qf.pojo.Holiday;
-import com.qf.pojo.User;
-import com.qf.pojo.Weekly;
+import com.qf.pojo.*;
+import com.qf.pojo.Class;
 
 import java.util.List;
 
@@ -33,4 +32,9 @@ public interface StudentService {
     //申请请假
     public int addHoliday(Holiday holiday);
 
+    //根据班级名称，查询讲师，班主任
+    public Class getClassBy(String gname);
+
+    //根据学生姓名，查查student表
+    public Student getStu(String sname);
 }

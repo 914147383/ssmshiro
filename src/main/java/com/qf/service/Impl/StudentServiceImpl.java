@@ -3,9 +3,8 @@ package com.qf.service.Impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qf.mapper.StudentMapper;
-import com.qf.pojo.Holiday;
-import com.qf.pojo.User;
-import com.qf.pojo.Weekly;
+import com.qf.pojo.*;
+import com.qf.pojo.Class;
 import com.qf.service.StudentService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -78,26 +77,38 @@ public class StudentServiceImpl implements StudentService {
         repositoryService.deleteDeployment("2501");*/
 
         studentMapper.addHoliday(holiday);
-        Map<String,Object> map = new HashMap<String,Object>();
-        /*map.put("stuName",holiday.getHname());
-        map.put("teaName","t");
-        map.put("claName","c");
-        map.put("BossName","b");
-        map.put("days",3);*/
 
-        map.put("teaName","t");
-        map.put("bossName","b");
+        Student stu = studentMapper.getStu(holiday.getHname());
+        Class classBy = studentMapper.getClassBy(stu.getSclass());
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("stuName",holiday.getHname());
+        map.put("teaName",classBy.getLecturer());
+        map.put("claName",classBy.getClass_teacher());
+        map.put("BossName","b");
+        map.put("days",3);
+
+        /*map.put("teaName","t");
+        map.put("bossName","b");*/
 
 
         //发起流程实例teaQingJia  stuQingJia1
-        runtimeService.startProcessInstanceByKey("teaQingJia",holiday.getHid()+"",map);
+        runtimeService.startProcessInstanceByKey("stuQingJia",holiday.getHid()+"",map);
         //完成任务
         Task task = taskService.createTaskQuery().taskAssignee(holiday.getHname()).singleResult();
         taskService.complete(task.getId());
         return holiday.getHid();
     }
-    /**
-     * 老师发起请假
-     */
+
+    @Override
+    public Class getClassBy(String gname) {
+        return studentMapper.getClassBy(gname);
+    }
+
+    @Override
+    public Student getStu(String sname) {
+        return studentMapper.getStu(sname);
+    }
+
 
 }
