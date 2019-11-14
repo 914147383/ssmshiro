@@ -13,20 +13,19 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Configuration
+@Configuration
 public class ShiroConfiguration {
 
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean getShiroFilter(SecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        //shiroFilterFactoryBean.setLoginUrl("/loginPage");
-        //shiroFilterFactoryBean.setSuccessUrl("/index");
-        //shiroFilterFactoryBean.setUnauthorizedUrl("/unauth");
+        shiroFilterFactoryBean.setLoginUrl("/loginPage");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unauth");
         Map<String,String> map = new HashMap<String,String>();
-       // map.put("/loginPage","anon");
-        //map.put("/log","anon");
-      //  map.put("/**","authc");
+        map.put("/loginPage","anon");
+        map.put("/log","anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
@@ -35,14 +34,14 @@ public class ShiroConfiguration {
         SecurityManager securityManager = new DefaultWebSecurityManager(myRealm);
         return securityManager;
     }
-    @Bean(name = "credentialsMatcher")
+    @Bean("credentialsMatcher")
     public CredentialsMatcher getCredentialsMatcher()
     {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName("md5");
         return hashedCredentialsMatcher;
     }
-    @Bean(name = "myRealm")
+    @Bean("myRealm")
     public MyRealm getMyRealm(CredentialsMatcher credentialsMatcher)
     {
         MyRealm myRealm = new MyRealm();
@@ -50,7 +49,7 @@ public class ShiroConfiguration {
         return myRealm;
     }
 
-    @Bean(name = "shiroDialect")
+    @Bean("shiroDialect")
     public ShiroDialect getShiroDialect(){
         return new ShiroDialect();
     }
