@@ -6,6 +6,8 @@ public class Employee {
     private String position;
     private String img;
 
+
+
     public int getEid() {
         return eid;
     }
@@ -52,6 +54,12 @@ public class Employee {
     }
 
     public Employee() {
+    }
+
+    public Employee(int eid, String ename, String position) {
+        this.eid = eid;
+        this.ename = ename;
+        this.position = position;
     }
 
     @Override
