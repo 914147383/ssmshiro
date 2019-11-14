@@ -36,4 +36,8 @@ public interface StudentMapper {
 
     //老师申请请假
     public int addVacate(Vacate vacate);
+
+    //学生查看自己的请假列表
+    public List<Holiday> getHolidayBySname(String sname);
+
 }

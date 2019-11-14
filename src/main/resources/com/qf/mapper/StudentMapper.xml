@@ -44,8 +44,8 @@
     </delete>
 
     <insert id="addHoliday" parameterType="holiday" useGeneratedKeys="true" keyProperty="hid">
-        insert into holiday(hname,startdate,enddate,reason,state)
-        values (#{hname},#{startdate},#{enddate},#{reason},0)
+        insert into holiday(hname,startdate,enddate,reason,state3)
+        values (#{hname},#{startdate},#{enddate},#{reason},#{state3})
     </insert>
 
 
@@ -63,4 +63,7 @@
         select * from student where sname=#{sname}
     </select>
 
+    <select id="getHolidayBySname" resultType="holiday">
+        select * from holiday where hname=#{arg0}
+    </select>
 </mapper>
