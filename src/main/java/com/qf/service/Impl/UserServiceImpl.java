@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByName(String username) {
+        return userMapper.getUserByName(username);
+    }
+
+    @Override
     public List<User> getUserList() {
         return userMapper.getUserList();
     }
@@ -53,8 +58,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updatePassword(User user) {
-        return userMapper.updatePassword(user);
+    public int updateUser(User user) {
+        return userMapper.updateUser(user);
     }
 
     @Override

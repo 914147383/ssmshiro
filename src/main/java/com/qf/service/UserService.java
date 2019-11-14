@@ -11,13 +11,15 @@ public interface UserService {
 
     public User getUserById(int uid);
 
+    public User getUserByName(String username);
+
     public List<User> getUserList();
 
     public List<User> getUserListByRoleName(String rolename);
 
     public int deleteUser(int uid);
 
-    public int updatePassword(User user);
+    public int updateUser(User user);
 
     public int addUser(User user);
 }
