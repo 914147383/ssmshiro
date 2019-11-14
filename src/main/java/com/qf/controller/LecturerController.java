@@ -1,11 +1,14 @@
 package com.qf.controller;
 
-import com.qf.pojo.Employee;
-import com.qf.pojo.Score;
-import com.qf.pojo.Student;
-import com.qf.pojo.Weekly;
+import com.qf.pojo.*;
 import com.qf.service.LecturerService;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class LeturerController {
+public class LecturerController {
 
     @Autowired
     private LecturerService lecturerService;
@@ -33,23 +36,25 @@ public class LeturerController {
         this.lecturerService = lecturerService;
     }
 
-    @RequestMapping("index")
-    public String index() {
+@RequestMapping("index")
+public String index(){
 
-        return "redirect:user";
-    }
+    return "redirect:user";
+}
 
     @RequestMapping("user")
-    public String user(HttpServletRequest request) {
-        String ename = "陈帅";
+    public String user(HttpServletRequest request,HttpSession session) {
+        session.setAttribute("username","chenshuai");
+        session.setAttribute("name","陈帅");
+        String ename = (String)session.getAttribute("name");
         Employee employee = lecturerService.selectSelf(ename);
         request.setAttribute("employee", employee);
         return "index";
     }
 
     @RequestMapping("selfInfo")
-    public String selfInfo(HttpServletRequest request) {
-        String ename = "陈帅";
+    public String selfInfo(HttpServletRequest request,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
         Employee employee = lecturerService.selectSelf(ename);
         request.setAttribute("employee", employee);
         return "selfInfo";
@@ -61,8 +66,8 @@ public class LeturerController {
     }
 
     @RequestMapping("stuList")
-    public String stuList(HttpServletRequest request) {
-        String ename = "陈帅";
+    public String stuList(HttpServletRequest request,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
         String sclass = lecturerService.myClass(ename);
         List<Student> stuList = lecturerService.stuList(sclass);
         request.setAttribute("stuList", stuList);
@@ -70,8 +75,8 @@ public class LeturerController {
     }
 
     @RequestMapping("forms")
-    public String forms(HttpServletRequest request) {
-        String ename = "陈帅";
+    public String forms(HttpServletRequest request,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
         Employee employee = lecturerService.selectSelf(ename);
         request.setAttribute("employee", employee);
         return "forms";
@@ -114,16 +119,16 @@ public class LeturerController {
     }
 
     @RequestMapping("weeks")
-    public String weeks(HttpServletRequest request) {
-        String ename = "陈帅";
+    public String weeks(HttpServletRequest request,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
         Employee employee = lecturerService.selectSelf(ename);
         request.setAttribute("employee", employee);
         return "weeks";
     }
 
     @RequestMapping("weekly")
-    public String weekly(HttpServletRequest request) {
-        String ename = "陈帅";
+    public String weekly(HttpServletRequest request,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
         String sclass = lecturerService.myClass(ename);
         List<Student> stuList = lecturerService.stuList(sclass);
         request.setAttribute("stuList", stuList);
@@ -131,8 +136,8 @@ public class LeturerController {
     }
 
     @RequestMapping("selfWeek")
-    public String selfWeek(HttpServletRequest request, String sname) {
-        String ename = "陈帅";
+    public String selfWeek(HttpServletRequest request, String sname,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
         Employee employee = lecturerService.selectSelf(ename);
         request.setAttribute("employee", employee);
         request.setAttribute("sname", sname);
@@ -176,12 +181,17 @@ public class LeturerController {
     }
 
     @RequestMapping("manageScore")
-    public String manageScore(Model model) {
-        String sclass = lecturerService.myClass("陈帅");
+    public String manageScore(Model model,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
+        String sclass = lecturerService.myClass(ename);
         String score1 = lecturerService.selectScore("第一阶段", sclass).toString();
         String score2 = lecturerService.selectScore("第二阶段", sclass).toString();
         String score3 = lecturerService.selectScore("第三阶段", sclass).toString();
         String score4 = lecturerService.selectScore("第四阶段", sclass).toString();
+        System.out.println(score1);
+        System.out.println(score2);
+        System.out.println(score3);
+        System.out.println(score4);
         List<String> list = new ArrayList<String>();
         list.add(score1);
         list.add(score2);
@@ -192,8 +202,8 @@ public class LeturerController {
     }
 
     @RequestMapping("scoreManage")
-    public String scoreManage(HttpServletRequest request) {
-        String ename = "陈帅";
+    public String scoreManage(HttpServletRequest request,HttpSession session) {
+        String ename = (String)session.getAttribute("name");
         Employee employee = lecturerService.selectSelf(ename);
         request.setAttribute("employee", employee);
         return "manageScore";
@@ -204,7 +214,7 @@ public class LeturerController {
         //System.out.println(sname);
         List<Score> list1 = lecturerService.selectStudentScore(sname);
         if (list1.size() == 0) {
-            String ename = "陈帅";
+            String ename = (String)session.getAttribute("name");
             Employee employee = lecturerService.selectSelf(ename);
             request.setAttribute("employee", employee);
             return "redirect:noSuchStudent";
@@ -222,7 +232,7 @@ public class LeturerController {
                 model.addAttribute("list", list);
                 return "selfScore";
             } catch (Exception e) {
-                String ename = "陈帅";
+                String ename = (String)session.getAttribute("name");
                 Employee employee = lecturerService.selectSelf(ename);
                 request.setAttribute("employee", employee);
                 request.setAttribute("sname", sname);
@@ -277,5 +287,114 @@ public class LeturerController {
         } else {
             return "addFail";
         }
+    }
+    @RequestMapping("addHolidayPage")
+    public String addHolidayPage(HttpServletRequest request,HttpSession session){
+        String ename = (String)session.getAttribute("name");
+        Employee employee = lecturerService.selectSelf(ename);
+        request.setAttribute("employee", employee);
+        return "vacation";
+    }
+    @RequestMapping("addVacation")
+    public String addVacation(){
+        return "addVacation";
+    }
+    @RequestMapping("saveVacation")
+    public String savaVacation(String vname,String startdate,String enddate,String reason){
+        Vacate vacate = new Vacate();
+        vacate.setVname(vname);
+        vacate.setStartdate(startdate);
+        vacate.setEnddate(enddate);
+        vacate.setReson(reason);
+        vacate.setState(0);
+        int i=lecturerService.addVacation(vacate);
+        return "redirect:user";
+    }
+    @RequestMapping("selectHoliday")
+    public String selectHoliday(HttpServletRequest request,HttpSession session){
+        String ename = (String)session.getAttribute("name");
+        Employee employee = lecturerService.selectSelf(ename);
+        request.setAttribute("employee", employee);
+        return "holidayApprove";
+    }
+    @RequestMapping("holidayExamine")
+    public String holidayExamine(HttpServletRequest request,HttpSession session){
+        String ename = (String)session.getAttribute("name");
+        String sclass= lecturerService.selectClass(ename);
+        List<Student> studentList = lecturerService.selectStudent(sclass);
+        List<Holiday> holidayList = new ArrayList<Holiday>();
+        for (Student student : studentList
+             ) {
+            holidayList.add(new Holiday(student.getSname()));
+        }
+        List<Holiday> holidayList1 = lecturerService.selectHoliday(holidayList);
+        //System.out.println(holidayList1);
+        request.setAttribute("holidayList1",holidayList1);
+        return "holidayExamine";
+    }
+    @RequestMapping("agreeHoliday")
+    public String agreeHoliday(Holiday holiday){
+        System.out.println(holiday);
+        int hid = holiday.getHid();
+        //System.out.println(hid);
+int i = lecturerService.agreeHoliday(hid);
+        System.out.println(i);
+if(i>0){
+        return "redirect:successAgree";
+    }
+else {
+    return "redirect:failAgree";
+}
+    }
+    @RequestMapping("successAgree")
+    public String successAgree(HttpServletRequest request,HttpSession session){
+        String ename = (String)session.getAttribute("name");
+        Employee employee = lecturerService.selectSelf(ename);
+        request.setAttribute("employee", employee);
+        return "successAgree";
+    }
+    @RequestMapping("agreeSuccess")
+    public String agreeSuccess(){
+        return "agreeSuccess";
+    }
+    @RequestMapping("failAgree")
+    public String failAgree(HttpServletRequest request,HttpSession session){
+        String ename = (String)session.getAttribute("name");
+        Employee employee = lecturerService.selectSelf(ename);
+        request.setAttribute("employee", employee);
+        return "failAgree";
+    }
+    @RequestMapping("agreeFail")
+    public String agreeFail(){
+        return "agreeFail";
+    }
+    @RequestMapping("updateMyself")
+    public String updateMyself(HttpSession session,HttpServletRequest request){
+        String username = (String)session.getAttribute("username");
+        String password = lecturerService.selectMyPassword(username);
+        request.setAttribute("username",username);
+        request.setAttribute("password",password);
+        return "updateMyself";
+    }
+
+    @RequestMapping("updateMyPassword")
+    public String updateMyPassword(String username,String password,HttpSession session){
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        System.out.println(user);
+        int i = lecturerService.updateMyPassword(user);
+        if (i > 0) {
+            session.removeAttribute("username");
+            session.removeAttribute("name");
+            return "login";
+        }
+        else{
+            return "failUpdate";
+        }
+    }
+    @RequestMapping("updateFail")
+    public String updateFail(){
+        return "updateFail";
     }
 }
