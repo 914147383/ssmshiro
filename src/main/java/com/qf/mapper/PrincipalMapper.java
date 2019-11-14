@@ -24,7 +24,14 @@ public interface PrincipalMapper {
     //员工请假审批
     public int updCheckedByVid(int vid);
 
-    //学生超过3天请假审批
+    //学生超过3天请假审批state----班主任
     public int updCheckedByHid(int hid);
+    //修改holiday里面的state2----讲师
+    public int updCheckedByHidAndTea(int hid);
+    //修改holiday里面的state3----校长
+    public int updCheckedByHidAndBoss(int hid);
+
+    //查询所有的校长
+    public List<User> getUserByRoleName(String rolename);
 
 }

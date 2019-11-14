@@ -2,31 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>校长查询学生请假超过3天待审批</title>
+    <title>员工请假待审批</title>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <title>Bootstrap Dashboard</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="all,follow" name="robots">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Fontastic Custom icon font-->
-    <link rel="stylesheet" href="css/fontastic.css">
+    <link href="css/fontastic.css" rel="stylesheet">
     <!-- Google fonts - Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <!-- jQuery Circle-->
-    <link rel="stylesheet" href="css/grasp_mobile_progress_circle-1.0.0.min.css">
+    <link href="css/grasp_mobile_progress_circle-1.0.0.min.css" rel="stylesheet">
     <!-- Custom Scrollbar-->
-    <link rel="stylesheet" href="vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+    <link href="vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" rel="stylesheet">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <link href="css/style.default.css" id="theme-stylesheet" rel="stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="css/custom.css">
+    <link href="css/custom.css" rel="stylesheet">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="img/favicon.ico">
+    <link href="img/favicon.ico" rel="shortcut icon">
 
     <style>
         table{
@@ -49,10 +49,10 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header d-flex align-items-center">
-            <h4>学生请假待<span style="color: red" th:text="${#session.getAttribute('username')}"></span>审批汇总</h4>
+            <h4>员工请假待<span style="color: red" th:text="${#session.getAttribute('username')}"></span>审批汇总</h4>
         </div>
         <div class="card-body" th:height="800px">
-            <div th:if="${holidy!=null}">
+            <div th:if="${vacate!=null}">
                 <table>
                     <tr>
                         <th>序号</th>
@@ -62,34 +62,34 @@
                         <th>请假理由</th>
                         <th>审核操作</th>
                     </tr>
-                    <tr th:each="w,i:${holidy.getList()}">
+                    <tr th:each="w,i:${vacate.getList()}">
                         <td th:text="${i.count}"></td>
-                        <td th:text="${w.getHname()}"></td>
+                        <td th:text="${w.getVname()}"></td>
                         <td th:text="${w.getStartdate()}"></td>
                         <td th:text="${w.getEnddate()}"></td>
                         <td th:text="${w.getReason()}"></td>
-                        <td><a th:href="@{passHoliday(hid=${w.getHid()})}">审核通过</a></td>
+                        <td><a th:href="@{passVacate(vid=${w.getVid()})}">审核通过</a></td>
                     </tr>
 
                 </table>
 
                 <table class="gridtable" style="width:100%;height: 100px; text-align: center">
                     <tr>
-                        <td th:if="${holidy.hasPreviousPage}" width="10%">
+                        <td th:if="${vacate.hasPreviousPage}" width="10%">
                             <a th:href="'?pageNo=1'">首页</a>
                         </td>
-                        <td th:if="${holidy.hasPreviousPage}" width="10%">
-                            <a th:href="'?pageNo='+${holidy.prePage}">上一页</a>
+                        <td th:if="${vacate.hasPreviousPage}" width="10%">
+                            <a th:href="'?pageNo='+${vacate.prePage}">上一页</a>
                         </td>
-                        <td th:each="nav : ${holidy.navigatepageNums}" width="10%">
-                            <a th:href="'?pageNo='+${nav}" th:if="${nav != holidy.pageNum}" th:text="${nav}"></a>
-                            <span style="font-weight: bold" th:if="${nav == holidy.pageNum}" th:text="${nav}"></span>
+                        <td th:each="nav : ${vacate.navigatepageNums}" width="10%">
+                            <a th:href="'?pageNo='+${nav}" th:if="${nav != vacate.pageNum}" th:text="${nav}"></a>
+                            <span style="font-weight: bold" th:if="${nav == vacate.pageNum}" th:text="${nav}"></span>
                         </td>
-                        <td th:if="${holidy.hasNextPage}" width="10%">
-                            <a th:href="'?pageNo='+${holidy.nextPage}">下一页</a>
+                        <td th:if="${vacate.hasNextPage}" width="10%">
+                            <a th:href="'?pageNo='+${vacate.nextPage}">下一页</a>
                         </td>
-                        <td th:if="${holidy.hasNextPage}" width="10%">
-                            <a th:href="'?pageNo='+${holidy.pages}">尾页</a>
+                        <td th:if="${vacate.hasNextPage}" width="10%">
+                            <a th:href="'?pageNo='+${vacate.pages}">尾页</a>
                         </td>
                     </tr>
                 </table>

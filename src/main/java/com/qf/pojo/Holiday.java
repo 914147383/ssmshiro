@@ -7,6 +7,32 @@ public class Holiday {
     private String enddate;
     private String reason;
     private int state;
+    private int state2;
+    private int state3;
+
+
+    public Holiday(int hid, String hname, String startdate, String enddate, String reason, int state, int state2, int state3) {
+        this.hid = hid;
+        this.hname = hname;
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.reason = reason;
+        this.state = state;
+        this.state2 = state2;
+        this.state3 = state3;
+    }
+
+    public int getState2() {
+        return state2;
+    }
+
+    public void setState2(int state2) {
+        this.state2 = state2;
+    }
+
+    public int getState3() {
+        return state3;
+    }
 
     public int getHid() {
         return hid;
@@ -73,6 +99,10 @@ public class Holiday {
         this.state = state;
     }
 
+    public void setState3(int state3) {
+        this.state3 = state3;
+    }
+
     public Holiday() {
     }
 
@@ -85,6 +115,8 @@ public class Holiday {
                 ", enddate='" + enddate + '\'' +
                 ", reason='" + reason + '\'' +
                 ", state=" + state +
+                ", state2=" + state2 +
+                ", state3=" + state3 +
                 '}';
     }
 }

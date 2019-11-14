@@ -19,11 +19,15 @@ public interface PrincipalService {
     public PageInfo<Vacate> getVacate(String username,int pageNum,int pageSize);
 
     //查询学生超过3天的待审批假条
-    public PageInfo<Holiday> getHolidy(String username,int pageNum,int pageSize);
+    public PageInfo<Holiday> getHolidy(String username,int pageNum,int pageSize,String processDef);
 
     //员工请假审批
-    public int updCheckedByVid(int vid);
+    public int updCheckedByVid(String username,int vid);
 
     //学生超过3天请假审批
     public int updCheckedByHid(String username,int hid);
+
+    //查询所有的校长
+    public List<User> getUserByRoleName(String rolename);
+
 }

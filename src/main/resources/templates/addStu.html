@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生批量导入导出</title>
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <title>Bootstrap Dashboard</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="all,follow" name="robots">
+    <!-- Bootstrap CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS-->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Fontastic Custom icon font-->
+    <link href="css/fontastic.css" rel="stylesheet">
+    <!-- Google fonts - Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <!-- jQuery Circle-->
+    <link href="css/grasp_mobile_progress_circle-1.0.0.min.css" rel="stylesheet">
+    <!-- Custom Scrollbar-->
+    <link href="vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" rel="stylesheet">
+    <!-- theme stylesheet-->
+    <link href="css/style.default.css" id="theme-stylesheet" rel="stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link href="css/custom.css" rel="stylesheet">
+    <!-- Favicon-->
+    <link href="img/favicon.ico" rel="shortcut icon">
+
+</head>
+<body>
+<div class="page">
+
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h4>学生批量导入导出</h4>
+        </div>
+        <div class="card-body">
+            <div class="line"></div>
+            <div class="card-header d-flex align-items-center">
+                <h4>导入</h4>
+            </div>
+            <form action="savStu" enctype="multipart/form-data" method="post">
+                <input name="file" type="file"/>
+                <input type="submit">
+            </form>
+            <div class="line"></div>
+
+            <table>
+
+            </table>
+
+            <div class="line"></div>
+
+            <div class="card-header d-flex align-items-center">
+                <h4>导出</h4>
+            </div>
+
+                <button><a th:href="@{importSucPage}">导出</a></button>
+            <br/>
+
+            <table>
+                <tr>
+                    <td>序号</td>
+                    <td>姓名</td>
+                    <td>标题</td>
+                    <td>时间</td>
+                    <td>内容</td>
+                    <td>分数</td>
+                </tr>
+                <tr th:each="w,var:${weekly}">
+                    <td th:text="${var.count}"></td>
+                    <td th:text="${w.getUsername()}"></td>
+                    <td th:text="${w.getTitle()}"></td>
+                    <td th:text="${w.getTime()}"></td>
+                    <td th:text="${w.getReport()}"></td>
+                    <td th:text="${w.getScore()}"></td>
+                </tr>
+            </table>
+            <div class="line"></div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!-- JavaScript files-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+<script src="vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- Main File-->
+<script src="js/front.js"></script>
+</body>
+</html>

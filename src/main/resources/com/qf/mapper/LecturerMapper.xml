@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mapper.LecturerMapper">
+    <select id="selectSelf"  resultType="com.qf.pojo.Employee">
+        select * from employee where ename=#{ename}
+    </select>
+<select id="myClass" resultType="java.lang.String">
+    select gname from class where lecturer=#{lecturer}
+</select>
+    <select id="stuList" resultType="com.qf.pojo.Student">
+        select * from student where sclass=#{sclass}
+    </select>
+    <select id="selfWeekly" resultType="com.qf.pojo.Weekly">
+        select  *  from weekly where username=#{username}
+    </select>
+    <update id="updateScore" parameterType="int">
+        update weekly set score=#{score} where wid=#{wid}
+    </update>
+    <select id="selectScore" resultType="java.lang.Double">
+      select AVG(score) from score where stage=#{arg0} and sclass=#{arg1}
+    </select>
+    <select id="studentScore" resultType="java.lang.Double">
+        select score from score where stage=#{arg0} and sname=#{arg1}
+    </select>
+    <select id="selectStudentScore" resultType="com.qf.pojo.Score">
+        select * from score where sname=#{sname}
+    </select>
+    <insert id="addScore">
+        insert into score (sname,sclass,stage,score) values(#{sname},#{sclass},#{stage},#{score})
+    </insert>
+</mapper>

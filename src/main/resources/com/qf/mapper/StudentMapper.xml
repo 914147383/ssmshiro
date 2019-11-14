@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.mapper.StudentMapper">
+
     <select id="getUserByUname" parameterType="String" resultType="user">
         select * from user where username=#{username}
     </select>
@@ -28,9 +29,14 @@
     <select id="getWeekly" resultType="weekly">
         select * from weekly where username=#{uname}
         <if test="title != ''">
-            and title=#{title}
+            and title like '%${title}%'
         </if>
-
+        <if test="time != ''">
+            and time like '%${time}%'
+        </if>
+        <if test="score != ''">
+            and score like '%${score}%'
+        </if>
     </select>
 
     <delete id="delWeekly" parameterType="weekly">
@@ -38,7 +44,26 @@
     </delete>
 
     <insert id="addHoliday" parameterType="holiday" useGeneratedKeys="true" keyProperty="hid">
-        insert into holiday(hname,startdate,enddate,reason,state)
-        values (#{hname},#{startdate},#{enddate},#{reason},0)
+        insert into holiday(hname,startdate,enddate,reason,state3)
+        values (#{hname},#{startdate},#{enddate},#{reason},#{state3})
     </insert>
+
+
+    <insert id="addVacate" parameterType="vacate" useGeneratedKeys="true" keyProperty="vid">
+        insert into vacate(vname,startdate,enddate,reason,state)
+        values (#{vname},#{startdate},#{enddate},#{reason},0)
+    </insert>
+
+
+    <select id="getClassBy" resultType="class">
+        select * from class where gname = #{gname}
+    </select>
+
+    <select id="getStu" resultType="student">
+        select * from student where sname=#{sname}
+    </select>
+
+    <select id="getHolidayBySname" resultType="holiday">
+        select * from holiday where hname=#{arg0}
+    </select>
 </mapper>

@@ -43,7 +43,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 form-control-label">姓名：</label>
                     <div class="col-sm-10">
-                        <input type="text" name="hname" value="a" class="form-control" readonly="readonly">
+                        <input class="form-control" name="hname" readonly="readonly" th:value="${#session.getAttribute('username')}" type="text">
                     </div>
                 </div>
                 <div class="line"></div>
