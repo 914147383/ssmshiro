@@ -40,10 +40,10 @@
         </div>
         <div class="card-body">
             <div class="line"></div>
-            <h1>
-                导入：
-            </h1><br/>
-            <form action="savStu">
+            <div class="card-header d-flex align-items-center">
+                <h4>导入</h4>
+            </div>
+            <form action="savStu" enctype="multipart/form-data" method="post">
                 <input name="file" type="file"/>
                 <input type="submit">
             </form>
@@ -53,11 +53,35 @@
 
             </table>
 
-            <h1>
-                导出：
-            </h1><br/>
-
             <div class="line"></div>
+
+            <div class="card-header d-flex align-items-center">
+                <h4>导出</h4>
+            </div>
+
+                <button><a th:href="@{importSucPage}">导出</a></button>
+            <br/>
+
+            <table>
+                <tr>
+                    <td>序号</td>
+                    <td>姓名</td>
+                    <td>标题</td>
+                    <td>时间</td>
+                    <td>内容</td>
+                    <td>分数</td>
+                </tr>
+                <tr th:each="w,var:${weekly}">
+                    <td th:text="${var.count}"></td>
+                    <td th:text="${w.getUsername()}"></td>
+                    <td th:text="${w.getTitle()}"></td>
+                    <td th:text="${w.getTime()}"></td>
+                    <td th:text="${w.getReport()}"></td>
+                    <td th:text="${w.getScore()}"></td>
+                </tr>
+            </table>
+            <div class="line"></div>
+
         </div>
     </div>
 </div>

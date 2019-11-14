@@ -25,6 +25,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentMapper studentMapper;
+
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
@@ -78,12 +79,19 @@ public class StudentServiceImpl implements StudentService {
 
         /*repositoryService.deleteDeployment("1");
         repositoryService.deleteDeployment("2501");*/
+        int days = getDays(holiday.getStartdate(), holiday.getEnddate());
+        if(days<3){
+            holiday.setState3(1);
+        }else {
+            holiday.setState3(0);
+        }
+       // System.out.println("holiday:"+holiday);
 
         studentMapper.addHoliday(holiday);
 
         Student stu = studentMapper.getStu(holiday.getHname());
         Class classBy = studentMapper.getClassBy(stu.getSclass());
-        int days = getDays(holiday.getStartdate(), holiday.getEnddate());
+
 
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("stuName",holiday.getHname());
@@ -106,14 +114,14 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public int addVacate(Vacate vacate) {
+    public int addVacate(Vacate vacate,String bName) {
 
         studentMapper.addVacate(vacate);
 
         Map<String,Object> map = new HashMap<String,Object>();
 
         map.put("teaName",vacate.getVname());
-        map.put("bossName","b");
+        map.put("bossName",bName);
 
         //发起流程实例teaQingJia  stuQingJia1
         runtimeService.startProcessInstanceByKey("teaQingJia",vacate.getVid()+"",map);
@@ -131,6 +139,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStu(String sname) {
         return studentMapper.getStu(sname);
+    }
+
+    @Override
+    public PageInfo<Holiday> getHolidayBySname(String sname,int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Holiday> holidayBySname = studentMapper.getHolidayBySname(sname);
+        PageInfo<Holiday> pageInfo = new PageInfo<Holiday>(holidayBySname);
+        return pageInfo;
     }
 
     /**

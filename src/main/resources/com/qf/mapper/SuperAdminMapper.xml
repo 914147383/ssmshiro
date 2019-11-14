@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mapper.SuperAdminMapper">
+    <insert id="addEmployee" parameterType="employee">
+        insert into employee(ename,position,img) values(#{ename},#{position},#{img})
+    </insert>
+    <delete id="deleteEmployee" parameterType="int">
+        delete from employee where eid=#{eid}
+    </delete>
+    <update id="updateEmployee" parameterType="employee">
+        update employee set ename=#{ename},position =#{position},img=#{img} where eid=#{eid}
+    </update>
+    <select id="getEmployeeById" parameterType="int" resultType="employee">
+        select * from employee where eid=#{eid}
+    </select>
+    <select id="getEmployeeList" resultType="employee">
+        select * from employee
+    </select>
+    <select id="getEmployeeByName" resultType="employee">
+        select * from employee where ename=#{ename}
+    </select>
+
+    <insert id="addClass" parameterType="class">
+        insert into class(gname,lecturer,class_teacher) values(#{gname},#{lecturer},#{class_teacher})
+    </insert>
+    <delete id="deleteClass" parameterType="int">
+        delete from class where gid=#{gid}
+    </delete>
+    <update id="updateClass" parameterType="class">
+        update class set gname=#{gname},lecturer=#{lecturer},class_teacher=#{class_teacher} where gid=#{gid}
+    </update>
+    <select id="getClassById" parameterType="int" resultType="class">
+        select * from class where gid=#{gid}
+    </select>
+    <select id="getClassList" resultType="class">
+        select * from class
+    </select>
+    <select id="getClassListByName" resultType="class">
+        select * from class where gname=#{gname}
+    </select>
+
+</mapper>

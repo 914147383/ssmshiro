@@ -26,4 +26,8 @@ public interface PrincipalService {
 
     //学生超过3天请假审批
     public int updCheckedByHid(String username,int hid);
+
+    //查询所有的校长
+    public List<User> getUserByRoleName(String rolename);
+
 }

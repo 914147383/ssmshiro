@@ -33,11 +33,14 @@ public interface StudentService {
     public int addHoliday(Holiday holiday);
 
     //老师申请请假
-    public int addVacate(Vacate vacate);
+    public int addVacate(Vacate vacate,String bName);
 
     //根据班级名称，查询讲师，班主任
     public Class getClassBy(String gname);
 
     //根据学生姓名，查查student表
     public Student getStu(String sname);
+
+    //学生查看自己的请假列表
+    public PageInfo<Holiday> getHolidayBySname(String sname,int pageNum,int pageSize);
 }

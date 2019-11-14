@@ -17,6 +17,14 @@
         update holiday set state=1 where hid=#{arg0}
     </update>
 
+    <update id="updCheckedByHidAndTea">
+         update holiday set state2=1 where hid=#{arg0}
+    </update>
+
+    <update id="updCheckedByHidAndBoss">
+         update holiday set state3=1 where hid=#{arg0}
+    </update>
+
     <select id="getVacate" resultType="vacate">
         select * from vacate where vid in
         <foreach collection="list" item="i" separator="," open="(" close=")">
@@ -29,5 +37,9 @@
         <foreach collection="list" item="i" separator="," open="(" close=")">
             #{i}
         </foreach>
+    </select>
+
+    <select id="getUserByRoleName" resultType="user">
+        select * from user where rolename=#{arg0}
     </select>
 </mapper>

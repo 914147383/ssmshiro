@@ -117,8 +117,19 @@ public class PrincipalServiceImpl implements PrincipalService {
         Task task = taskService.createTaskQuery().processInstanceBusinessKey(hid + "").taskAssignee(username).singleResult();
         taskService.complete(task.getId());
         //审核通过
-        return principalMapper.updCheckedByHid(hid);
+        User userByUname = studentMapper.getUserByUname(username);
+        if(userByUname.getRolename().equals("class_teacher")){
+            return principalMapper.updCheckedByHid(hid);
+        }else if(userByUname.getRolename().equals("lecturer")){
+            return principalMapper.updCheckedByHidAndTea(hid);
+        }else
+        return principalMapper.updCheckedByHidAndBoss(hid);
 
+    }
+
+    @Override
+    public List<User> getUserByRoleName(String rolename) {
+        return principalMapper.getUserByRoleName(rolename);
     }
 
 

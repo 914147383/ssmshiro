@@ -21,8 +21,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public int addCourse(Course course) {
-        return courseMapper.addCourse(course);
+    public int addCourse(String cname) {
+        return courseMapper.addCourse(cname);
     }
 
     @Override

@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.mapper.CourseMapper">
-    <insert id="addCourse" parameterType="course">
-        insert into user cname values #{cname}
+    <insert id="addCourse" parameterType="java.lang.String">
+        insert into course (cname) values (#{cname})
     </insert>
     <delete id="deleteCourse" parameterType="int">
         delete from course where cid=#{cid}
     </delete>
     <update id="updateCourse" parameterType="course">
-        update user set cname=#{cname} where cid=#{cid}
+        update course set cname=#{cname} where cid=#{cid}
     </update>
     <select id="getCourseById" parameterType="int" resultType="course">
         select * from course where cid=#{cid}
