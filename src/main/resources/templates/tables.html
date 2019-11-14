@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+  <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Bootstrap Dashboard</title>
     <meta name="description" content="">
@@ -46,12 +46,13 @@
           });
 
         $("body").on("click","#addHoliday",function(){
-          $(".dv_content").attr("src","addHoliday");/*学生请假申请*/
+          $(".dv_content").attr("src","addHoliday");/*请假申请*/
         });
 
-        $("body").on("click","#selVacatePage",function(){
-          $(".dv_content").attr("src","selVacatePage");/*员工请假审批*/
+        $("body").on("click","#addHoliday",function(){
+          $(".dv_content").attr("src","addHoliday");/*员工请假审批*/
         });
+
 
         $("body").on("click","#selStuHolidayPage",function(){
           $(".dv_content").attr("src","selStuHolidayPage");/*学生请假审批*/
@@ -61,9 +62,32 @@
           $(".dv_content").attr("src","addHoliday");/*成绩查看*/
         });
 
-        $("body").on("click","#addVacate",function(){
-          $(".dv_content").attr("src","addVacate");/*老师请假申请*/
+
+
+        $("body").on("click","#course",function(){
+          $(".dv_content").attr("src","course");/*课程管理*/
         });
+
+        $("body").on("click","#superadmin",function(){
+          $(".dv_content").attr("src","superadmin");/*个人资料*/
+        });
+
+        $("body").on("click","#role",function(){
+          $(".dv_content").attr("src","role"); /*角色管理*/
+        });
+
+        $("body").on("click","#user",function(){
+          $(".dv_content").attr("src","user");/*用户管理*/
+        });
+
+        $("body").on("click","#employee",function(){
+          $(".dv_content").attr("src","employee");/*员工管理*/
+        });
+
+        $("body").on("click","#classroom",function(){
+          $(".dv_content").attr("src","classroom");/*班级管理*/
+        });
+
 
       })
 
@@ -82,8 +106,8 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
-          <div class="sidenav-header-inner text-center"><img alt="person" class="img-fluid rounded-circle" th:src="'img/'+${#session.getAttribute('userByUname').getImg()}">
-            <h2 class="h5">Nathan Andrews</h2><span>Web Developer</span>
+          <div class="sidenav-header-inner text-center"><img th:src="${user.img}" alt="person" class="img-fluid rounded-circle">
+            <h2 class="h5" th:text="${user.name}" ></h2><span th:text="${user.rolename}"></span>
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
           <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
@@ -93,22 +117,41 @@
           <h5 class="sidenav-heading">Main</h5>
           <ul id="side-main-menu" class="side-menu list-unstyled">
 
-                <li><a href="#" id="updStuPage">个人资料管理</a></li>
-                <li><a href="#" id="addWeeklyPage">新增周报</a></li>
-
-                <li><a href="#" id="getWeekly">查询周报</a></li>
-                <li><a href="#" id="addHoliday">学生请假申请</a></li>
-
-                <li><a href="#" id="addVacate">老师请假申请</a></li>
+            <li><a shiro:hasRole="student" href="#" id="addWeeklyPage">新增周报</a></li>
+            <li><a shiro:hasRole="student" href="#" id="getWeekly">查询周报</a></li>
+            <li><a shiro:hasRole="student" href="#" id="addHoliday">学生请假申请</a></li>
 
 
-                <li><a href="#" id="selVacatePage">员工请假审批</a></li>
-                <li><a href="#" id="selStuHolidayPage">学生请假审批</a></li>
-                <li><a href="#" id="getScore">成绩查看</a></li>
+            <li><a shiro:hasRole="lecturer" href="#" id="">学生信息</a></li>
+            <li><a shiro:hasRole="lecturer" href="#" id="">周报查看</a></li>
+            <li><a shiro:hasRole="lecturer" href="#" id="">成绩管理</a></li>
+            <li><a shiro:hasRole="lecturer" href="#" id="">请假审批</a></li>
+            <li><a shiro:hasRole="lecturer" href="#" id="">个人请假</a></li>
 
-            <li><a href="loginP"> <i class="icon-interface-windows"></i>
-                Login page
-                </a>
+
+
+            <li><a shiro:hasRole="principal" href="#" id="updVacate">员工请假审批</a></li>
+            <li><a shiro:hasRole="principal" href="#" id="selStuHolidayPage">学生请假审批</a></li>
+            <li><a shiro:hasRole="principal" href="#" id="getScore">成绩查看</a></li>
+
+
+
+            <li><a shiro:hasRole="class_teacher" href="#" id="">学生管理</a></li>
+            <li><a shiro:hasRole="class_teacher" href="#" id="">周报查看</a></li>
+            <li><a shiro:hasRole="class_teacher" href="#" id="">成绩查看</a></li>
+            <li><a shiro:hasRole="class_teacher" href="#" id="">请假审批</a></li>
+            <li><a shiro:hasRole="class_teacher" href="#" id="">个人请假</a></li>
+
+
+            <li><a shiro:hasRole="superadmin" href="#" id="course">课程管理</a></li>
+            <li><a shiro:hasRole="superadmin" href="#" id="role">角色管理</a></li>
+            <li><a shiro:hasRole="superadmin" href="#" id="user">用户管理</a></li>
+            <li><a shiro:hasRole="superadmin" href="#" id="employee">员工管理</a></li>
+            <li><a shiro:hasRole="superadmin" href="#" id="classroom">班级管理</a></li>
+
+
+            <li><a  href="#" id="superadmin">个人资料管理</a></li>
+            <li><a href="loginPage"> <i class="icon-interface-windows"></i>登录页面</a>
             </li>
           </ul>
 
@@ -145,7 +188,7 @@
       </header>
       <!-- Breadcrumb-->
 
-      <iframe src="updStuPage" class="dv_content" frameborder="0" scrolling="no" >
+      <iframe src="superadmin" class="dv_content" frameborder="0" scrolling="no" >
 
       </iframe>
 
