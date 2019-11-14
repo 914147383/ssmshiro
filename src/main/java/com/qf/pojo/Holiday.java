@@ -10,7 +10,6 @@ public class Holiday {
     private int state2;
     private int state3;
 
-
     public Holiday(int hid, String hname, String startdate, String enddate, String reason, int state, int state2, int state3) {
         this.hid = hid;
         this.hname = hname;
